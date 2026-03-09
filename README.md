@@ -133,7 +133,7 @@ streamlit run app.py
 
 ---
 
-## 8) Prediction API (면접관 포인트)
+## 8) Prediction API
 
 ```powershell
 uvicorn src.predict_api:app --reload
