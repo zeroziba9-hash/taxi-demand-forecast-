@@ -1,5 +1,9 @@
 # taxi-demand-forecast
 
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B?logo=streamlit&logoColor=white)
+![CI](https://github.com/zeroziba9-hash/taxi-demand-forecast-/actions/workflows/ci.yml/badge.svg)
+
 NYC Taxi 수요 예측 프로젝트입니다.  
 실무형 **시계열 수요 예측(time-series demand forecasting)** 프로젝트로, ML baseline 비교 + 대시보드를 포함합니다.
 
@@ -218,7 +222,19 @@ Uses `TimeSeriesSplit(n_splits=5)` for more realistic time-series evaluation.
 
 ---
 
-## 12) Business Impact / Limitations
+## 12) CI (자동 검증)
+
+- Workflow: `.github/workflows/ci.yml`
+- Push/PR 시 자동으로 아래를 검증합니다:
+  - 의존성 설치
+  - 샘플 데이터 생성
+  - 학습 스크립트 실행
+  - 산출물 파일 생성 확인
+  - API import smoke check
+
+---
+
+## 13) Business Impact / Limitations
 
 ### Business Impact
 - 피크 시간대 수요 예측으로 차량 배치 최적화 가능
