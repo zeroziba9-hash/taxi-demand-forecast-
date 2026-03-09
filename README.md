@@ -86,15 +86,27 @@ python src\train_baseline.py
 ### 산출물 스크린샷
 
 #### Model Comparison Table
+두 모델(RandomForest, XGBoost)의 최종 성능을 한눈에 비교한 표입니다.  
+MAE/RMSE가 낮을수록 성능이 좋고, 현재는 XGBoost가 근소하게 우세합니다.
+
 ![model-comparison-table](docs/screenshots/model_comparison_table.png)
 
 #### CV Metrics Table
+시간순 교차검증(TimeSeriesSplit) 결과입니다.  
+fold별 점수를 통해 모델이 특정 구간에서만 잘 맞는지, 전반적으로 안정적인지 확인할 수 있습니다.
+
 ![cv-metrics-table](docs/screenshots/cv_metrics_table.png)
 
 #### RMSE Comparison Chart
+모델별 RMSE를 막대그래프로 시각화한 결과입니다.  
+숫자 표보다 빠르게 우열을 확인할 때 유용합니다.
+
 ![rmse-comparison](docs/screenshots/rmse_comparison.png)
 
 #### Prediction Preview Chart
+실제값(actual)과 예측값(pred)의 흐름을 같이 보여주는 그래프입니다.  
+두 선이 비슷하게 움직일수록 예측이 잘 된다는 의미입니다.
+
 ![prediction-preview](docs/screenshots/prediction_preview.png)
 
 ---
