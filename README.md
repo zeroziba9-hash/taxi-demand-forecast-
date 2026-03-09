@@ -83,6 +83,20 @@ python src\train_baseline.py
 | `models/best_model.pkl` | best model 저장 파일 |
 | `models/feature_order.json` | 입력 feature 순서/모델 메타 |
 
+### 산출물 스크린샷
+
+#### Model Comparison Table
+![model-comparison-table](docs/screenshots/model_comparison_table.png)
+
+#### CV Metrics Table
+![cv-metrics-table](docs/screenshots/cv_metrics_table.png)
+
+#### RMSE Comparison Chart
+![rmse-comparison](docs/screenshots/rmse_comparison.png)
+
+#### Prediction Preview Chart
+![prediction-preview](docs/screenshots/prediction_preview.png)
+
 ---
 
 ## 7) Dashboard (대시보드)
