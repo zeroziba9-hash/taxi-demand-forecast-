@@ -1,0 +1,13 @@
+.venv/
+.vscode/
+__pycache__/
+*.pyc
+models/
+*.pkl
+
+# keep folder, ignore local datasets by default
+data/*.csv
+
+# generated reports
+reports/*.csv
+reports/*.png
