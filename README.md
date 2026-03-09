@@ -231,6 +231,12 @@ Uses `TimeSeriesSplit(n_splits=5)` for more realistic time-series evaluation.
   - 학습 스크립트 실행
   - 산출물 파일 생성 확인
   - API import smoke check
+  - pytest API 기본 테스트 실행
+
+### Local Test
+```powershell
+pytest -q
+```
 
 ---
 

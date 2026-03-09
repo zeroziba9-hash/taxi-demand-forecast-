@@ -50,3 +50,7 @@ jobs:
       - name: API smoke check
         run: |
           python -c "from src.predict_api import app; print(app.title)"
+
+      - name: Run tests
+        run: |
+          pytest -q
