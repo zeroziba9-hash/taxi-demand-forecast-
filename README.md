@@ -1,7 +1,11 @@
 # taxi-demand-forecast
 
 NYC Taxi 수요 예측 프로젝트입니다.  
-A practical **time-series demand forecasting** project with ML baselines + dashboard.
+실무형 **시계열 수요 예측(time-series demand forecasting)** 프로젝트로, ML baseline 비교 + 대시보드를 포함합니다.
+
+> **NYC Taxi란?**  
+> 뉴욕시 택시 운행 데이터를 의미합니다. 보통 승차 시각, 위치, 요금, 건수 등의 정보가 포함되며,
+> 시간대별 수요 예측 연습용으로 많이 사용되는 대표 공개 데이터입니다.
 
 ---
 
@@ -81,17 +85,17 @@ python src\train_baseline.py
 
 ---
 
-## 7) Dashboard
+## 7) Dashboard (대시보드)
 
 ```powershell
 streamlit run app.py
 ```
 
-Dashboard includes:
-- Model comparison table
-- RMSE chart
-- Prediction preview chart
-- Quick inference form (hour/dayofweek/month/day)
+대시보드에서 확인할 수 있는 항목:
+- 모델 비교 테이블 (Model comparison table)
+- RMSE 비교 차트
+- 예측값 미리보기 차트 (Prediction preview)
+- 빠른 추론 폼 (hour/dayofweek/month/day)
 
 ---
 
