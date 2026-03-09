@@ -16,6 +16,7 @@ NYC Taxi 수요 예측 프로젝트입니다.
   - **RandomForestRegressor**
   - **XGBoostRegressor**
 - 결과를 파일(csv/png)로 저장하고, Streamlit 대시보드에서 확인합니다.
+- 학습된 best model을 API로 서빙할 수 있습니다.
 
 ---
 
@@ -55,8 +56,10 @@ python src\train_baseline.py
 - `src/prepare_data.py` raw -> train 전처리
 - `src/train_baseline.py` 모델 학습/비교 + best model 저장
 - `src/train_with_cv.py` TimeSeriesSplit 교차검증
+- `src/predict_api.py` FastAPI 기반 추론 API
 - `models/` best model (`best_model.pkl`) 및 feature metadata
-- `reports/` 결과 리포트(csv/png)
+- `reports/` 결과 리포트(csv/png, experiment log)
+- `docs/architecture.md` 아키텍처 다이어그램
 - `app.py` Streamlit dashboard
 
 ---
@@ -80,6 +83,7 @@ python src\train_baseline.py
 | `reports/rmse_comparison.png` | RMSE 막대그래프 |
 | `reports/prediction_preview.png` | 실제값 vs 예측값 시각화 |
 | `reports/cv_metrics.csv` | TimeSeriesSplit fold별 성능 |
+| `reports/experiment_log.md` | 실험 이력 기록 |
 | `models/best_model.pkl` | best model 저장 파일 |
 | `models/feature_order.json` | 입력 feature 순서/모델 메타 |
 
@@ -125,9 +129,52 @@ streamlit run app.py
 
 ---
 
-## 8) Key Code Snippets (주요 코드)
+## 8) Prediction API (면접관 포인트)
 
-### 8.1 Feature Engineering
+```powershell
+uvicorn src.predict_api:app --reload
+```
+
+- Health check: `GET /health`
+- Inference: `POST /predict`
+
+Example request:
+```json
+{
+  "hour": 9,
+  "dayofweek": 1,
+  "month": 3,
+  "day": 9
+}
+```
+
+Example response:
+```json
+{
+  "model": "XGBoost",
+  "features": {
+    "hour": 9,
+    "dayofweek": 1,
+    "month": 3,
+    "day": 9
+  },
+  "predicted_trip_count": 126.4832
+}
+```
+
+---
+
+## 9) Architecture
+
+- Diagram: `docs/architecture.md`
+- 학습/평가/서빙(대시보드+API) 흐름 분리
+- 모델 아티팩트 재사용 구조
+
+---
+
+## 10) Key Code Snippets (주요 코드)
+
+### 10.1 Feature Engineering
 ```python
 df["hour"] = df["pickup_datetime"].dt.hour
 df["dayofweek"] = df["pickup_datetime"].dt.dayofweek
@@ -135,7 +182,7 @@ df["month"] = df["pickup_datetime"].dt.month
 df["day"] = df["pickup_datetime"].dt.day
 ```
 
-### 8.2 Compared Models
+### 10.2 Compared Models
 ```python
 models = {
     "RandomForest": RandomForestRegressor(n_estimators=200, random_state=42, n_jobs=-1),
@@ -152,7 +199,7 @@ models = {
 }
 ```
 
-### 8.3 Time-based Split (no shuffle)
+### 10.3 Time-based Split (no shuffle)
 ```python
 split_idx = int(len(df) * 0.8)
 X_train, X_test = X.iloc[:split_idx], X.iloc[split_idx:]
@@ -161,10 +208,29 @@ y_train, y_test = y.iloc[:split_idx], y.iloc[split_idx:]
 
 ---
 
-## 9) Cross Validation
+## 11) Cross Validation
 
 ```powershell
 python src\train_with_cv.py
 ```
 
 Uses `TimeSeriesSplit(n_splits=5)` for more realistic time-series evaluation.
+
+---
+
+## 12) Business Impact / Limitations
+
+### Business Impact
+- 피크 시간대 수요 예측으로 차량 배치 최적화 가능
+- 공급 부족 시간대 사전 대응(대기시간/취소율 감소 기대)
+- 운영팀이 대시보드 기반으로 빠른 의사결정 가능
+
+### Current Limitations
+- 현재는 샘플 기반 feature(시간 변수 중심)만 사용
+- 날씨/공휴일/이벤트 feature 미반영
+- 하이퍼파라미터 탐색 범위 제한
+
+### Next Step
+- lag feature(직전 1시간/24시간) 추가
+- 외부 변수(weather/holiday) 결합
+- API 배포 + 모니터링(요청량/지연시간) 추가
