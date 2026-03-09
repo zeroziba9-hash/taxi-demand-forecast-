@@ -52,5 +52,7 @@ jobs:
           python -c "from src.predict_api import app; print(app.title)"
 
       - name: Run tests
+        env:
+          PYTHONPATH: .
         run: |
           pytest -q
